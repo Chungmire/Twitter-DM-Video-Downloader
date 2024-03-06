@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter DM Downloader",
+  "version": "1.0.0",
+  "description": "Featuring ffmpeg.wasm",
+  "icons": {
+      "32": "icons/elon.png",
+      "48": "icons/elon.png",
+      "96": "icons/elon.png"
+  },
+  "permissions": [      
+    "storage", 
+    "webRequest",
+    "downloads"],
+  "host_permissions": [
+      "<all_urls>"
+  ],
+  "action": {
+      "default_icon": "icons/elon.png",
+      "default_title": "Twitter DM Downloader",
+      "default_popup": "html/popup.html"
+  },
+  "background": {
+      "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+      {
+          "matches": [
+              "https://twitter.com/*"
+          ],
+          "js": [
+              "lib/ffmpeg.min.js",
+              "lib/ffmpeg-core.js",
+              "js/content.js"
+          ]
+      }
+  ],
+  "options_ui": {
+      "page": "html/transcode.html"
+  },
+  "web_accessible_resources": [
+      {
+          "resources": [
+              "data/*",
+              "html/*",
+              "lib/*"
+          ],
+          "matches": [
+              "<all_urls>"
+          ]
+      }
+  ],
+  "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+      "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; child-src 'self';"
+  }
+}
