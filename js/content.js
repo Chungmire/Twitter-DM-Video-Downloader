@@ -24,6 +24,7 @@ function addMenuItemToDropdown(dropdown, eventTarget) {
     newMenuItem.setAttribute('tabindex', '0');
     newMenuItem.className = 'css-175oi2r r-1loqt21 r-18u37iz r-ymttw5 r-1f1sjgu r-13qz1uu r-o7ynqc r-6416eg r-1ny4l3l';
     newMenuItem.classList.add('my-custom-menu-item');
+    newMenuItem.style.transition = "background-color 0.2s ease";
     newMenuItem.innerHTML = `
       <div class="css-175oi2r r-1777fci r-j2kj52">
       <svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1nao33i r-1q142lx"><g><path d="M21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Zm-9.71,1.71a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l4-4a1,1,0,0,0-1.42-1.42L13,12.59V3a1,1,0,0,0-2,0v9.59l-2.29-2.3a1,1,0,1,0-1.42,1.42Z"></path></g></svg>           
@@ -37,6 +38,15 @@ function addMenuItemToDropdown(dropdown, eventTarget) {
     `;
 
     dropdown.appendChild(newMenuItem);
+
+      newMenuItem.addEventListener('mouseenter', () => {
+        newMenuItem.style.backgroundColor = "rgb(22, 24, 28)";
+    });
+    
+    newMenuItem.addEventListener('mouseleave', () => {
+        newMenuItem.style.backgroundColor = "";
+    });
+  
 
     newMenuItem.addEventListener('click', () => {
       requestTranscodedVideo(videoId);
