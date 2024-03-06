@@ -1,8 +1,7 @@
 # Twitter DM Video Downloader
 
 
-Twitter does not natively include a download function for videos sent in direct messages and groupchats. Additionally, there were no existing extensions that added such a feature, nor were there any relevant code snippets for the core steps involved. The extent of the advice regarding this was limited to "use devtools + ffmpeg or vlc". Real convenient, especially when you realize there's more. Many such cases with StackOverflow. After a few days of dealing with manifest v3 and nondescript error messages from ffmpeg.wasm (admittedly a slightly outdated version), a button can now do it all for you. If this tells you anything, ChatGPT said it wasn't possible. Alright, enough yapping from me.
-
+Save those 💎s with the click of a button! Adds a function Twitter should have natively but doesn't. In short, it fetches the encoded .m3u8 playlist and all of its contained .m4s segments for the video and audio tracks, then uses [ffmmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) to turn these tracks into a single playable .mp4
 
 ## Usage
 
