@@ -3,18 +3,19 @@ let videoUrls = {};
 function parseVideoUrl(url) {
   const videoIdPattern = /dm_video\/(\d+)/;
   const videoResolutionPattern = /avc1\/(\d+x\d+)/;
-  const audioPattern = /mp4a\/128000/;
+  const audioPattern = /mp4a\/(\d+)/; // Updated to capture bitrate
 
   const videoIdMatch = url.match(videoIdPattern);
   const videoResolutionMatch = url.match(videoResolutionPattern);
-  const isAudio = audioPattern.test(url);
+  const audioMatch = url.match(audioPattern); // Capturing bitrate in the match
 
-  if (isAudio) {
+  if (audioMatch) {
     // Handle audio URL
     return {
       url,
       videoId: videoIdMatch ? videoIdMatch[1] : null,
       type: 'audio',
+      bitrate: audioMatch ? parseInt(audioMatch[1], 10) : 0, // Storing bitrate
     };
   } else if (videoResolutionMatch) {
     // Handle video URL
@@ -40,19 +41,25 @@ chrome.webRequest.onBeforeRequest.addListener(
         videoUrls[parsed.videoId] = { video: null, audio: null };
       }
 
-      // Update the best video or set the audio URL
+      // Update the best video or set/update the best audio URL
       if (parsed.type === 'video') {
-        const currentBest = videoUrls[parsed.videoId].video;
-        if (!currentBest || (parsed.width * parsed.height > currentBest.width * currentBest.height)) {
+        const currentBestVideo = videoUrls[parsed.videoId].video;
+        if (!currentBestVideo || (parsed.width * parsed.height > currentBestVideo.width * currentBestVideo.height)) {
           videoUrls[parsed.videoId].video = parsed; // Store the best resolution video
         }
       } else if (parsed.type === 'audio') {
-        videoUrls[parsed.videoId].audio = parsed; // Store the audio track
+        const currentBestAudio = videoUrls[parsed.videoId].audio;
+        if (!currentBestAudio || parsed.bitrate > currentBestAudio.bitrate) {
+          videoUrls[parsed.videoId].audio = parsed; // Update to the highest bitrate audio
+        }
       }
     }
   },
   { urls: ["<all_urls>"] }
 );
+
+// The rest of your code remains the same.
+
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'requestURLs' && request.videoId) {
