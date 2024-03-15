@@ -50,16 +50,13 @@ chrome.webRequest.onBeforeRequest.addListener(
       } else if (parsed.type === 'audio') {
         const currentBestAudio = videoUrls[parsed.videoId].audio;
         if (!currentBestAudio || parsed.bitrate > currentBestAudio.bitrate) {
-          videoUrls[parsed.videoId].audio = parsed; // Update to the highest bitrate audio
+          videoUrls[parsed.videoId].audio = parsed; // highest bitrate audio
         }
       }
     }
   },
   { urls: ["<all_urls>"] }
 );
-
-// The rest of your code remains the same.
-
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'requestURLs' && request.videoId) {
