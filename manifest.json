@@ -4,9 +4,10 @@
   "version": "1.0.0",
   "description": "Featuring ffmpeg.wasm",
   "icons": {
-      "32": "icons/elon.png",
-      "48": "icons/elon.png",
-      "96": "icons/elon.png"
+      "32": "icons/gem.png",
+      "48": "icons/gem.png",
+      "96": "icons/gem.png",
+      "128": "icons/gem.png"
   },
   "permissions": [      
     "storage", 
@@ -16,7 +17,7 @@
       "<all_urls>"
   ],
   "action": {
-      "default_icon": "icons/elon.png",
+      "default_icon": "icons/gem.png",
       "default_title": "Twitter DM Downloader",
       "default_popup": "html/popup.html"
   },
