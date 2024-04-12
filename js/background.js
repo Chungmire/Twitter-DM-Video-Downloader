@@ -2,12 +2,13 @@ let videoUrls = {};
 
 function parseVideoUrl(url) {
   const videoIdPattern = /dm_video\/(\d+)/;
-  const videoResolutionPattern = /avc1\/(\d+x\d+)/;
-  const audioPattern = /mp4a\/(\d+)/; // Updated to capture bitrate
+  const videoResolutionPattern1 = /avc1\/(\d+x\d+)/;
+  const videoResolutionPattern2 = /hevc\/(\d+x\d+)/;
+  const audioPattern = /mp4a\/(\d+)/;
 
   const videoIdMatch = url.match(videoIdPattern);
-  const videoResolutionMatch = url.match(videoResolutionPattern);
-  const audioMatch = url.match(audioPattern); // Capturing bitrate in the match
+  const videoResolutionMatch = url.match(videoResolutionPattern1) || url.match(videoResolutionPattern2);
+  const audioMatch = url.match(audioPattern);
 
   if (audioMatch) {
     // Handle audio URL
