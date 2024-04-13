@@ -1,7 +1,7 @@
 # Twitter DM Video Downloader
 
 
-Save those 💎s with the click of a button! Adds a function Twitter should have natively but doesn't. I searched far and wide for an existing solution to no avail, so this undertaking required a little inguinuity. In short, it fetches the encoded .m3u8 playlist and all of its contained .m4s segments for the video and audio tracks, then uses [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) to combine these tracks into a single playable .mp4
+Save those 💎s with the click of a button! Adds a function Twitter should have natively but doesn't. I searched far and wide for an existing solution to no avail, but alas it is possible. In short, it fetches the encoded .m3u8 playlist and all of its contained .m4s segments for the video and audio tracks, then uses [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) to combine these tracks into a single playable .mp4
 
 ## Usage
 
