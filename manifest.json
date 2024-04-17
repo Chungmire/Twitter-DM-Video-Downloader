@@ -12,7 +12,7 @@
   "permissions": [      
     "storage", 
     "webRequest",
-    "downloads"],
+  ],
   "host_permissions": [
       "<all_urls>"
   ],
