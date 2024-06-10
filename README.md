@@ -5,7 +5,7 @@ Save those 💎s with the click of a button! Adds a function Twitter should have
 
 ## Usage
 
-1. Download from [Releases](https://github.com/Chungmire/Twitter-DM-Video-Downloader-Extension/releases/download/current/TwitterDMDownloader.zip).
+1. Download from [Releases](https://github.com/Chungmire/Twitter-DM-Video-Downloader/releases/tag/Fixed).
 2. Unzip. Result should be just the `TwitterDMDownloader` folder.
 3. Navigate to [extensions](chrome://extensions/).
 4. Toggle on `Developer Mode` in the top right.
