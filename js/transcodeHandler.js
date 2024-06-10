@@ -7,7 +7,7 @@ const ffmpeg = createFFmpeg({
 });
 
 async function convertM3U8ToMP4(urls) {
-
+    console.log(`Converting M3U8 to MP4: ${urls}`)
     const videoTrack = urls[0]
     const audioTrack = urls[1]
 
@@ -19,6 +19,8 @@ async function convertM3U8ToMP4(urls) {
 }
 
 async function processTrack(trackURL, trackType) {
+    console.log(`Processing ${trackType} track: ${trackURL}`)
+
     if (ffmpeg.isLoaded()) await ffmpeg.exit();
     await ffmpeg.load();
 
@@ -38,7 +40,6 @@ async function processTrack(trackURL, trackType) {
     const commandStr = `-protocol_whitelist file,tls,tcp,https,crypto -allowed_extensions ALL -i ${localInputFileName} -c copy ${outputFileName}`;
     await ffmpeg.run(...commandStr.split(' '));
 
-    // Attempt to read the produced MP4 file and create a Blob
     try {
         const data = ffmpeg.FS('readFile', outputFileName);
         const blob = new Blob([data.buffer], { type: 'video/mp4' });
@@ -77,14 +78,26 @@ async function combineVideoAndAudioBlobs(videoBlob, audioBlob) {
 }
 
 function prepareSegmentReplacements(m3u8Content, trackType) {
-    const urlPattern = /https:\/\/video\.twimg\.com\/dm_video\/[^\s]+\.m4s\?container=cmaf/g;
-    const segmentUrls = m3u8Content.match(urlPattern);
+    console.log("m3u8Content:", m3u8Content); // Log the m3u8 content
+    const lines = m3u8Content.split('\n');
+    const segmentUrls = lines.filter(line => line.startsWith('https://') && line.endsWith('.m4s'));
+    console.log("segmentUrls:", segmentUrls); // Log the matched URLs
+
+    if (segmentUrls.length === 0) {
+        console.error("No segment URLs found in the m3u8 content.");
+        return [];
+    }
+
     const replacements = segmentUrls.map((url, index) => ({
         originalUrl: url,
         localFilename: `segment${index + 1}_${trackType}.m4s`
     }));
     return replacements;
 }
+
+
+
+
 
 async function fetchAndWriteSegments(replacements) {
     for (const { originalUrl, localFilename } of replacements) {
@@ -133,6 +146,7 @@ function downloadFile(blob, fileName) {
 //This runs when the page opens.
 chrome.storage.local.get('urlsToTranscode', async ({ urlsToTranscode }) => {
     if (urlsToTranscode) {
+        console.log(`Transcoding URLs: ${urlsToTranscode}`)
         await convertM3U8ToMP4(urlsToTranscode);
         chrome.storage.local.remove('urlsToTranscode', () => {
             window.close();
