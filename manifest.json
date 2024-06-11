@@ -1,18 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Twitter DM Downloader",
-  "version": "1.0.0",
-  "description": "Featuring ffmpeg.wasm",
+  "name": "X/Twitter DM Downloader",
+  "version": "1.2.0",
+  "description": "Adds a download button for Twitter DM/GC videos",
   "icons": {
       "32": "icons/gem.png",
       "48": "icons/gem.png",
-      "96": "icons/gem.png",
-      "128": "icons/gem.png"
+      "96": "icons/gem.png"
   },
   "permissions": [      
     "storage", 
-    "webRequest",
-  ],
+    "webRequest"
+	],
   "host_permissions": [
       "<all_urls>"
   ],
@@ -27,7 +26,7 @@
   "content_scripts": [
       {
           "matches": [
-              "https://twitter.com/*"
+              "https://x.com/*"
           ],
           "js": [
               "lib/ffmpeg.min.js",
