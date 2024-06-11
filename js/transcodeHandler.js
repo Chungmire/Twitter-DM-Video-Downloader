@@ -149,7 +149,9 @@ chrome.storage.local.get('urlsToTranscode', async ({ urlsToTranscode }) => {
         console.log(`Transcoding URLs: ${urlsToTranscode}`)
         await convertM3U8ToMP4(urlsToTranscode);
         chrome.storage.local.remove('urlsToTranscode', () => {
-            window.close();
+            setTimeout(() => {
+                window.close()
+            }, 100);
         });
     }
 });
