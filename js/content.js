@@ -11,11 +11,14 @@ function requestTranscodedVideo(videoId) {
 function addMenuItemToDropdown(dropdown, eventTarget) {
   const cellInnerDiv = eventTarget.closest('[data-testid="cellInnerDiv"]');
   const embeddedVideoDiv = cellInnerDiv ? cellInnerDiv.querySelector('[aria-label="Embedded video"]') : null;
-  if (!embeddedVideoDiv) return;
+  if (!embeddedVideoDiv){
+    return;}
+
 
   const posterUrl = embeddedVideoDiv.getAttribute('poster');
   const videoIdMatch = posterUrl.match(/dm_video_preview\/(\d+)\/img/);
-  if (!videoIdMatch) return;
+  if (!videoIdMatch) {
+    return}
   const videoId = videoIdMatch[1];
   const existingItem = dropdown.querySelector('.my-custom-menu-item');
   if (!existingItem) {
@@ -79,3 +82,12 @@ function addMenuItemToDropdown(dropdown, eventTarget) {
 
 
 
+
+function downloadFile(blob, fileName) {
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+  reader.onloadend = function() {
+      const base64data = reader.result;
+      chrome.runtime.sendMessage({ action: 'download', data: base64data, filename: fileName });
+  };
+}
